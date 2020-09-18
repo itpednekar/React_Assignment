@@ -22,7 +22,8 @@ class Signin extends Component {
         }
       ],
       isFormValid: true,
-      isFormSubmitted: false
+      isFormSubmitted: false,
+      disableButton: true
     }
   }
   validateForm() {
@@ -30,6 +31,7 @@ class Signin extends Component {
       if (!this.state.login[i].valid)
         return false
     }
+    this.setState({disableButton : false})
     return true
   }
   onChangeInpute(e, index) {
@@ -38,11 +40,14 @@ class Signin extends Component {
     tempArray[index].val = e.target.value
     tempArray[index].valid = isValid
     this.setState({ login: tempArray })
+    if(this.state.login[0].valid && this.state.login[1].valid)
+    this.setState({disableButton : false})
   }
   validate(val, index) {
     let { key, type, valid, required, regx } = this.state.login[index]
     if (required) {
-      if (!(val.length > 0))
+      console.log(val.length > 0)
+      if (!(val.length >= 0))
         return false
     }
     switch (type) {
@@ -72,28 +77,31 @@ class Signin extends Component {
     let { login } = this.state;
     return (
 
-     <div  style={{ textAlign : 'center'}}>
+      <div style={{ textAlign: 'center' }}>
         <form onSubmit={(e) => { this.onSubmitForm(e) }}>
-        { (!this.state.isFormValid) &&
-          <div style={{ color: 'red', padding: '5px' }}>Form is not valid! Scroll down for erros</div>}
-        { (this.state.isFormValid && this.state.isFormSubmitted) &&
-          <div style={{ color: 'green', padding: '5px' }}>Congratulations! Form submitted successfully!</div>}
-        <div >
+          {(!this.state.isFormValid) &&
+            <div style={{ color: 'red', padding: '5px' }}>Form is not valid! Scroll down for erros</div>}
+          {(this.state.isFormValid && this.state.isFormSubmitted) &&
+            <div style={{ color: 'green', padding: '5px' }}>Congratulations! Form submitted successfully!</div>}
+          <div >
             <h2>Sign In</h2>
-          <div>
-            <input onChange={(e) => { this.onChangeInpute(e, 0) }} style={Style.inpute} value={login[0].val} type="text" />
-            {!this.state.login[0].valid && <div style={{ padding: '5px', color: 'red' }}>Email is not valid</div>}
+            <div>
+              <input onChange={(e) => { this.onChangeInpute(e, 0) }} style={Style.inpute} value={login[0].val} type="text" />
+              {!this.state.login[0].valid && <div style={{ padding: '5px', color: 'red' }}>Email is not valid</div>}
+            </div>
+            <div>
+              <input onChange={(e) => { this.onChangeInpute(e, 1) }} style={Style.inpute} value={login[1].val} type="password" />
+              {!this.state.login[1].valid && <div style={{ padding: '5px', color: 'red' }}>Password is not valid</div>}
+            </div>
+            <div>
+              {
+                 <button type="submit" style={Style.btn} disabled={this.state.disableButton}> Sign In</button>
+              }
+             
+            </div>
           </div>
-          <div>
-            <input onChange={(e) => { this.onChangeInpute(e, 1) }} style={Style.inpute} value={login[1].val} type="password" />
-            {!this.state.login[1].valid && <div style={{ padding: '5px', color: 'red' }}>Password is not valid</div>}
-            </div>
-          <div>
-            <button style={Style.btn} type="submit"> Sign In</button>
-            </div>
-        </div>
-      </form>
-     </div>
+        </form>
+      </div>
     );
   }
 }

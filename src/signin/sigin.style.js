@@ -5,9 +5,8 @@ export default {
         border: '1px solid #ccc'
     },
     'btn': {
-        backgroundColor: 'green',
-        color: 'white',
-        padding: '10px',
-        width: '100px'
+        padding : '10px', 
+        width : '90px', 
+        border : '1px solid',
     }
 }
