@@ -2,9 +2,7 @@ function getHt() {
     return document.documentElement.clientHeight
 }
 
-function getImage(imageNmae) {
-    return (`https://gsg-image-uploads.s3-accelerate.amazonaws.com/webcontent/img/coaches/profilePic/${imageNmae}`)
-}
+
 
 function returnRegx(type) {
     switch (type) {
@@ -13,4 +11,14 @@ function returnRegx(type) {
     }
 }
 
-export { getHt, getImage, returnRegx }
+function fakeLogin(em, pass, success, err ) {
+    setTimeout(() => {
+        if(em === 'itp@gmail.com' && pass === 'Ishwari@123')
+        success({ auth : 'someauth'})
+        else
+        err('Invalid credentials! Give a try again :)')
+    }, 500);
+}
+
+
+export { getHt, returnRegx, fakeLogin }
