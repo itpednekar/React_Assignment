@@ -115,7 +115,6 @@ class Signin extends Component {
   render() {
     let { login, formErr, errMsg } = this.state;
     return (
-
       <div style={{ textAlign: 'center' }}>
         <form onSubmit={(e) => { this.onSubmitForm(e) }}>
           {(!this.state.isFormValid) &&
